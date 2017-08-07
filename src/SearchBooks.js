@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Book from './Book'
 
 class SearchBooks extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired
+  }
 
   render() {
+    const { books } = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -21,11 +28,21 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {books.map((book) =>
+              <li key={book.id}>
+                <Book book={book} />
+              </li>
+            )}
+          </ol>
         </div>
       </div>
     )
   }
+}
+
+SearchBooks.propTypes = {
+  books: PropTypes.array.isRequired
 }
 
 export default SearchBooks
