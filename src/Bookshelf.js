@@ -6,11 +6,12 @@ class Bookshelf extends Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    changeBookself: PropTypes.func.isRequired
   }
 
   render() {
-    const { title, books } = this.props;
+    const { title, books, changeBookself } = this.props;
 
     return (
       <div className="bookshelf">
@@ -19,7 +20,7 @@ class Bookshelf extends Component {
           <ol className="books-grid">
             {books.map((book) =>
               <li key={book.id}>
-                <Book book={book} />
+                <Book book={book} onShelfChange={changeBookself} />
               </li>
             )}
           </ol>
@@ -31,7 +32,8 @@ class Bookshelf extends Component {
 
 Bookshelf.propTypes = {
   title: PropTypes.string.isRequired,
-  books: PropTypes.array.isRequired
+  books: PropTypes.array.isRequired,
+  changeBookself: PropTypes.func.isRequired
 }
 
 export default Bookshelf

@@ -22,13 +22,26 @@ class BooksApp extends React.Component {
     })
   }
 
+  changeBookself = (book, shelf) => {
+    this.setState((state) => ({
+      books: state.books.map(function(b) {
+        if (b.id === book.id) {
+          b.shelf = shelf;
+        }
+        return b;
+      })
+    }))
+
+    BooksAPI.update(book, shelf);
+  }
+
   render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
           <SearchBooks books={this.state.books} />
         ) : (
-          <ListBooks books={this.state.books} />
+          <ListBooks books={this.state.books} changeBookself={this.changeBookself} />
         )}
       </div>
     )
