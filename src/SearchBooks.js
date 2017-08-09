@@ -4,11 +4,14 @@ import Book from './Book'
 
 class SearchBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onSearch: PropTypes.func.isRequired,
+    results: PropTypes.array,
+    changeBookself: PropTypes.func.isRequired
   }
 
   render() {
-    const { books } = this.props;
+    const { books, onSearch, results, changeBookself } = this.props;
 
     return (
       <div className="search-books">
@@ -23,17 +26,18 @@ class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input type="text" onChange={(e) => { onSearch(e.target.value) }} placeholder="Search by title or author"/>
 
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.map((book) =>
-              <li key={book.id}>
-                <Book book={book} />
+
+            {typeof results !== 'undefied' && results.length > 0 && (results.map((result) =>
+              <li key={result.id}>
+                <Book book={result} onShelfChange={changeBookself} />
               </li>
-            )}
+            ))}
           </ol>
         </div>
       </div>
@@ -42,7 +46,10 @@ class SearchBooks extends Component {
 }
 
 SearchBooks.propTypes = {
-  books: PropTypes.array.isRequired
+  books: PropTypes.array.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  results: PropTypes.array,
+  changeBookself: PropTypes.func.isRequired
 }
 
 export default SearchBooks
