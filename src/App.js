@@ -11,12 +11,6 @@ class BooksApp extends React.Component {
     results: []
   }
 
-  /**
-   * TODO: Refactor searchBooks to use the books
-   * instead of results. This should fix the
-   * problem with results not updating state.
-  */
-
   componentDidMount() {
     this.getBooks()
   }
@@ -52,10 +46,14 @@ class BooksApp extends React.Component {
     })
   }
 
+  clearSearch = () => {
+    this.setState({results: []})
+  }
+
   searchBooks = (query) => {
     if (query.length > 0) {
       BooksAPI.search(query).then((results) => {
-        if (Array.isArray(results) && results.length) {
+        if (!results.error) {
           this.setState((state) => ({
             results: results.map(function(result) {
               for (const book of state.books) {
@@ -66,6 +64,8 @@ class BooksApp extends React.Component {
               return result;
             })
           }))
+        } else {
+          this.setState({results: []})
         }
       })
     } else {
@@ -77,7 +77,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks results={this.state.results} onSearch={this.searchBooks} changeBookself={this.changeBookself} />
+          <SearchBooks results={this.state.results} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
         )} />
 
         <Route exact path="/" render={() => (
