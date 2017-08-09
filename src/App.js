@@ -39,8 +39,22 @@ class BooksApp extends React.Component {
   searchBooks = (query) => {
     if (query.length > 0) {
       BooksAPI.search(query, 20).then((results) => {
-        this.setState({ results })
+        if (Array.isArray(results) && results.length) {
+          this.setState((state) => ({
+            results: results.map(function(result) {
+              for (const book of state.books) {
+                if (book.id === result.id) {
+                  result.shelf = book.shelf
+                }
+              }
+
+              return result;
+            })
+          }))
+        }
       })
+    } else {
+      this.setState({results: []})
     }
   }
 

@@ -4,14 +4,19 @@ import Book from './Book'
 
 class SearchBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
     onSearch: PropTypes.func.isRequired,
     results: PropTypes.array,
     changeBookself: PropTypes.func.isRequired
   }
 
+  /**
+   *
+   * TODO: Add Page routing using React Route
+   * TODO: Fix the back button to take you back to bookshelves page.
+   **/
+
   render() {
-    const { books, onSearch, results, changeBookself } = this.props;
+    const { onSearch, results, changeBookself } = this.props;
 
     return (
       <div className="search-books">
@@ -33,7 +38,7 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
 
-            {typeof results !== 'undefied' && results.length > 0 && (results.map((result) =>
+            {results.length > 0 && (results.map((result) =>
               <li key={result.id}>
                 <Book book={result} onShelfChange={changeBookself} />
               </li>
@@ -46,7 +51,6 @@ class SearchBooks extends Component {
 }
 
 SearchBooks.propTypes = {
-  books: PropTypes.array.isRequired,
   onSearch: PropTypes.func.isRequired,
   results: PropTypes.array,
   changeBookself: PropTypes.func.isRequired
