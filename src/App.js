@@ -11,28 +11,50 @@ class BooksApp extends React.Component {
     results: []
   }
 
+  /**
+   * TODO: Refactor searchBooks to use the books
+   * instead of results. This should fix the
+   * problem with results not updating state.
+  */
+
   componentDidMount() {
+    this.getBooks()
+  }
+
+  changeBookself = (book, shelf) => {
+    this.setState(function(state) {
+        const index = state.books.findIndex((b) => book.id === b.id)
+
+        if (index !== -1) {
+          state.books[index].shelf = shelf
+        } else {
+          book.shelf = shelf
+          state.books.push(book)
+        }
+
+        return {
+          books: state.books,
+          results: state.results.map(function(b) {
+            if (b.id === book.id) {
+              b.shelf = shelf;
+            }
+            return b;
+          })
+        }
+    })
+
+    BooksAPI.update(book, shelf)
+  }
+
+  getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
   }
 
-  changeBookself = (book, shelf) => {
-    this.setState((state) => ({
-      books: state.books.map(function(b) {
-        if (b.id === book.id) {
-          b.shelf = shelf;
-        }
-        return b;
-      })
-    }))
-
-    BooksAPI.update(book, shelf);
-  }
-
   searchBooks = (query) => {
     if (query.length > 0) {
-      BooksAPI.search(query, 20).then((results) => {
+      BooksAPI.search(query).then((results) => {
         if (Array.isArray(results) && results.length) {
           this.setState((state) => ({
             results: results.map(function(result) {
@@ -41,7 +63,6 @@ class BooksApp extends React.Component {
                   result.shelf = book.shelf
                 }
               }
-
               return result;
             })
           }))
@@ -56,7 +77,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks books={this.state.books} onSearch={this.searchBooks} results={this.state.results} changeBookself={this.changeBookself} />
+          <SearchBooks results={this.state.results} onSearch={this.searchBooks} changeBookself={this.changeBookself} />
         )} />
 
         <Route exact path="/" render={() => (

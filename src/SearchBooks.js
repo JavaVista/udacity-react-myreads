@@ -10,6 +10,19 @@ class SearchBooks extends Component {
     changeBookself: PropTypes.func.isRequired
   }
 
+  state = {
+    query: ''
+  }
+
+  updateQuery = (query) => {
+    this.setState({query: query.trim()})
+    this.props.onSearch(this.state.query)
+  }
+
+  componentDidMount() {
+    this.props.onSearch(this.state.query)
+  }
+
   /**
    * TODO: When changing a book's shelf from search
    * the results state does not update. It might be
@@ -20,14 +33,14 @@ class SearchBooks extends Component {
    **/
 
   render() {
-    const { onSearch, results, changeBookself } = this.props;
+    const { results, changeBookself } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" onChange={(e) => { onSearch(e.target.value) }} placeholder="Search by title or author"/>
+            <input type="text" value={this.state.query} onChange={(e) => this.updateQuery(e.target.value) } placeholder="Search by title or author"/>
           </div>
         </div>
         <div className="search-books-results">
