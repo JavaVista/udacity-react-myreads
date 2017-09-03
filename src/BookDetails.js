@@ -20,11 +20,11 @@ class BookDetails extends Component {
     if (book.id !== match.params.id) {
       getBook(match.params.id);
     }
-
+    //console.log(history.back());
     return (
       <div className="list-books">
         <div className="list-books-title">
-          <Link className="close-details" to="/">Close</Link>
+          <a className="close-details" href="#" onClick={()=> (history.back())}>Close</a>
           <h1>MyReads</h1>
         </div>
         <div key={book.id} className="book-details">

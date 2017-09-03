@@ -51,6 +51,10 @@ class BooksApp extends React.Component {
           state.books.push(book)
         }
 
+        if (book.id === state.book.id) {
+          state.book.shelf = book.shelf;
+        }
+
         return {
           books: state.books,
           results: state.results.map(function(b) {
@@ -58,7 +62,8 @@ class BooksApp extends React.Component {
               b.shelf = shelf;
             }
             return b;
-          })
+          }),
+          book: state.book
         }
     })
 
