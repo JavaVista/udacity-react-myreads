@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class BookDetails extends Component {
@@ -23,6 +24,7 @@ class BookDetails extends Component {
     return (
       <div className="list-books">
         <div className="list-books-title">
+          <Link className="close-details" to="/">Close</Link>
           <h1>MyReads</h1>
         </div>
         <div key={book.id} className="book-details">

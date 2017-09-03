@@ -221,3 +221,18 @@ h4.book-authors {
     font-size: 0.9rem;
     font-weight: normal;
 }
+
+.close-details {
+  position: absolute;
+  display: block;
+  top: 5px;
+  left: 15px;
+  width: 50px;
+  height: 53px;
+  background: white;
+  background-image: url('./icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 28px;
+  font-size: 0;
+}
