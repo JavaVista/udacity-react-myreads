@@ -23,7 +23,8 @@ class BooksApp extends React.Component {
   state = {
     books: [],
     results: [],
-    book: {}
+    book: {},
+    query: ""
   }
 
   componentWillMount() {
@@ -122,6 +123,9 @@ class BooksApp extends React.Component {
   * the results to the State.
   */
   searchBooks = (query) => {
+    //set query string to state
+    this.setState({query: query})
+    
     if (query.length > 0) {
       BooksAPI.search(query).then((results) => {
         if (!results.error) {
@@ -156,7 +160,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks results={this.state.results} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
+          <SearchBooks results={this.state.results} query={this.state.query} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
         )} />
 
         <Route exact path="/" render={() => (
