@@ -7,40 +7,23 @@ class SearchBooks extends Component {
   static propTypes = {
     onSearch: PropTypes.func.isRequired,
     results: PropTypes.array,
-    changeBookself: PropTypes.func.isRequired
-  }
-
-  state = {
-    query: ''
-  }
-
-  updateQuery = (query) => {
-    this.setState({query: query.trim()})
-    this.props.onSearch(this.state.query)
+    changeBookself: PropTypes.func.isRequired,
+    clearSearch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    this.props.onSearch(this.state.query)
+    this.props.clearSearch()
   }
 
-  /**
-   * TODO: When changing a book's shelf from search
-   * the results state does not update. It might be
-   * better to use the books state to be the results
-   * state.
-   * TODO: Add the ability select the max number of
-   * results pulled back. Currently this is hard coded.
-   **/
-
   render() {
-    const { results, changeBookself } = this.props;
+    const { results, changeBookself, onSearch } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" value={this.state.query} onChange={(e) => this.updateQuery(e.target.value) } placeholder="Search by title or author"/>
+            <input type="text" onChange={(e) => onSearch(e.target.value.trim()) } placeholder="Search by title or author"/>
           </div>
         </div>
         <div className="search-books-results">
@@ -60,7 +43,8 @@ class SearchBooks extends Component {
 SearchBooks.propTypes = {
   onSearch: PropTypes.func.isRequired,
   results: PropTypes.array,
-  changeBookself: PropTypes.func.isRequired
+  changeBookself: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired
 }
 
 export default SearchBooks
