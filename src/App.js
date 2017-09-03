@@ -6,15 +6,27 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
+
+  /*
+   * books: the books currently in your library
+   * results: the search results returned from the web service.
+   */
   state = {
     books: [],
     results: []
   }
 
+
   componentDidMount() {
     this.getBooks()
   }
 
+  /*
+  * @changeBookself
+  * Updates the App State for both books and results. This is necessary to keep
+  * them in sync.
+  * The web service Update method is called.
+  */
   changeBookself = (book, shelf) => {
     this.setState(function(state) {
         const index = state.books.findIndex((b) => book.id === b.id)
@@ -40,16 +52,30 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf)
   }
 
+  /*
+  * @getBooks
+  * Gets the current books on the shelves from the web service
+  */
   getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
   }
 
+  /*
+  * @getBooks
+  * Gets the current books on the shelves from the web service
+  */
   clearSearch = () => {
     this.setState({results: []})
   }
 
+  /*
+  * @searchBooks
+  * Gets the search results from the API using user's query
+  * Updates the results bookshelf using the books in State before passing
+  * the results to the State. 
+  */
   searchBooks = (query) => {
     if (query.length > 0) {
       BooksAPI.search(query).then((results) => {
