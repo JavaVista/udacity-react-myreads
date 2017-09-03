@@ -19,5 +19,5 @@ The list view is made up of three shelves (Currently Reading, Want to Read, Read
 ### Search view
 The search view is used add new books to your shelves. Using **+** button will take you to the search view. Books can be searched by title or author.
 
-### Detail view (future release)
-Clicking the book image will take you to the book details view. This will display more details about the book. 
+### Detail view
+Clicking the book image will take you to the book details view. This will display more details about the book including the description. The back button works as a browser back button would by taking you the previous page. 

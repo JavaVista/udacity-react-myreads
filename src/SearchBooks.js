@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
@@ -7,23 +6,23 @@ class SearchBooks extends Component {
   static propTypes = {
     onSearch: PropTypes.func.isRequired,
     results: PropTypes.array,
+    query: PropTypes.string,
     changeBookself: PropTypes.func.isRequired,
     clearSearch: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    this.props.clearSearch()
-  }
-
   render() {
-    const { results, changeBookself, onSearch } = this.props;
+    const { results, query, changeBookself, onSearch } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link className="close-search" to="/">Close</Link>
+          <a href="#" className="close-search" onClick={() => {
+            this.props.clearSearch();
+            history.back();
+          }}>Close</a>
           <div className="search-books-input-wrapper">
-            <input type="text" onChange={(e) => onSearch(e.target.value.trim()) } placeholder="Search by title or author"/>
+            <input type="text" value={query} onChange={(e) => onSearch(e.target.value.trim()) } placeholder="Search by title or author"/>
           </div>
         </div>
         <div className="search-books-results">
@@ -43,6 +42,7 @@ class SearchBooks extends Component {
 SearchBooks.propTypes = {
   onSearch: PropTypes.func.isRequired,
   results: PropTypes.array,
+  query: PropTypes.string,
   changeBookself: PropTypes.func.isRequired,
   clearSearch: PropTypes.func.isRequired
 }
