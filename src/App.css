@@ -8,6 +8,14 @@ body, .app {
   background: white;
 }
 
+h4 {
+  margin: 15px 0 0 0;
+}
+
+p {
+  margin: 2px 0;
+}
+
 /* main page */
 
 .list-books-title {
@@ -171,4 +179,45 @@ body, .app {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
+}
+
+/* book details */
+.book-details {
+  display: flex;
+  max-width: 1000px;
+  margin: 25px auto;
+}
+
+.book-details .book-cover {
+  position: relative;
+  min-width: 128px;
+}
+
+.book-details .book-top {
+  flex-wrap: wrap;
+  height: auto;
+  padding: 0 15px;
+}
+
+.book-details .book-title, .book-details .book-pub, .book-details .book-authors, .book-details .book-description {
+  flex-basis: 100%;
+}
+
+h2.book-title {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+h3.book-pub {
+    margin: 0;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+h4.book-authors {
+    margin: 0;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: normal;
 }
