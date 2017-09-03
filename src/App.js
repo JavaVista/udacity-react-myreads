@@ -7,10 +7,8 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 /*
-TODO: Create a Book details page
-  TODO: Create back button for BookDetails
-  TODO: Check for large image
- */
+* TODO: Change the overall theme of the project
+*/
 
 class BooksApp extends React.Component {
 

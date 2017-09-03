@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+/*
+* TODO: Make the details page more visually appealing.
+* TODO: Update Average Review to use icons.
+* BUG: The shelf select does not update although the App state does.
+*/
+
 class BookDetails extends Component {
 
   static propTypes = {
