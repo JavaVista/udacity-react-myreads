@@ -11,17 +11,16 @@ class SearchBooks extends Component {
     clearSearch: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    this.props.clearSearch()
-  }
-
   render() {
     const { results, changeBookself, onSearch } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link className="close-search" to="/">Close</Link>
+          <a href="#" className="close-search" onClick={() => {
+            this.props.clearSearch();
+            history.back();
+          }}>Close</a>
           <div className="search-books-input-wrapper">
             <input type="text" onChange={(e) => onSearch(e.target.value.trim()) } placeholder="Search by title or author"/>
           </div>
