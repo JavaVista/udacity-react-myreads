@@ -113,7 +113,7 @@ class BooksApp extends React.Component {
   * Clears the search results from the search page.
   */
   clearSearch = () => {
-    this.setState({results: []})
+    this.setState({results: [], query: ""})
   }
 
   /*
@@ -125,7 +125,7 @@ class BooksApp extends React.Component {
   searchBooks = (query) => {
     //set query string to state
     this.setState({query: query})
-    
+
     if (query.length > 0) {
       BooksAPI.search(query).then((results) => {
         if (!results.error) {
