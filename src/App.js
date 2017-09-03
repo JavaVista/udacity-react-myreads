@@ -52,6 +52,7 @@ class BooksApp extends React.Component {
         }
 
         if (book.id === state.book.id) {
+          console.log(state.book.id);
           state.book.shelf = book.shelf;
         }
 
@@ -86,10 +87,8 @@ class BooksApp extends React.Component {
   * If found, returns a book object, else false
   */
   getBook = (id) => {
-    console.log(id);
     BooksAPI.get(id).then((book) => {
       this.setState({book});
-      console.log(book);
     });
   }
 

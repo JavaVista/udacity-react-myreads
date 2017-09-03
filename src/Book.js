@@ -11,7 +11,7 @@ class Book extends Component {
 
   render() {
     const { book, onShelfChange } = this.props
-    const shelf = book.shelf ? book.shelf : 'none';
+    const shelf = book.shelf ? book.shelf : 'none'
 
     return (
       <div key={book.id} className="book">

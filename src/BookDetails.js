@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class BookDetails extends Component {
 
   static propTypes = {
     book: PropTypes.object.isRequired,
-    onShelfChange: PropTypes.func.isRequired
+    onShelfChange: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    getBook: PropTypes.func.isRequired
   }
 
   componentWillUnmount() {
@@ -20,7 +21,7 @@ class BookDetails extends Component {
     if (book.id !== match.params.id) {
       getBook(match.params.id);
     }
-    //console.log(history.back());
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -49,11 +50,10 @@ class BookDetails extends Component {
                 <h4>Details</h4>
                 <p><strong>Page Count:</strong> {book.pageCount} pages</p>
                 <p><strong>Publisher:</strong> {book.publisher}</p>
-                <p><strong>Language:</strong></p>
                 {book.industryIdentifiers.map((i) => (
                   <p key={i.type}><strong>{i.type}:</strong> {i.identifier}</p>
                 ))}
-                <p><strong>Average Review</strong> {book.averageRating} ({book.ratingsCount} reviews)</p>
+                <p><strong>Average Review:</strong> {book.averageRating} ({book.ratingsCount} reviews)</p>
               </div>
               <div className="book-description">
                 <h4>Description</h4>
@@ -70,6 +70,8 @@ class BookDetails extends Component {
 BookDetails.propTypes = {
   book: PropTypes.object.isRequired,
   onShelfChange: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  getBook: PropTypes.func.isRequired
 }
 
 export default BookDetails
