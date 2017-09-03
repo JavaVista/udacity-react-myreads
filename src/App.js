@@ -1,21 +1,33 @@
 import React from 'react'
 import SearchBooks from './SearchBooks'
 import ListBooks from './ListBooks'
+import BookDetails from './BookDetails'
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
+/*
+* TODO: Change the overall theme of the project
+*/
+
 class BooksApp extends React.Component {
+
 
   /*
    * books: the books currently in your library
    * results: the search results returned from the web service.
+   * book: the current book being view on details page
    */
   state = {
     books: [],
-    results: []
+    results: [],
+    book: {},
+    query: ""
   }
 
+  componentWillMount() {
+    this.resetBook()
+  }
 
   componentDidMount() {
     this.getBooks()
@@ -38,6 +50,11 @@ class BooksApp extends React.Component {
           state.books.push(book)
         }
 
+        if (book.id === state.book.id) {
+          console.log(state.book.id);
+          state.book.shelf = book.shelf;
+        }
+
         return {
           books: state.books,
           results: state.results.map(function(b) {
@@ -45,7 +62,8 @@ class BooksApp extends React.Component {
               b.shelf = shelf;
             }
             return b;
-          })
+          }),
+          book: state.book
         }
     })
 
@@ -63,20 +81,49 @@ class BooksApp extends React.Component {
   }
 
   /*
-  * @getBooks
-  * Gets the current books on the shelves from the web service
+  * @getBookById
+  * Finds a book in State based on the id parameter.
+  * If found, returns a book object, else false
+  */
+  getBook = (id) => {
+    BooksAPI.get(id).then((book) => {
+      this.setState({book});
+    });
+  }
+
+  /*
+  * @resetBook
+  * Resets the book state to be an empty
+  */
+  resetBook = () => {
+    this.setState({book: {
+      "id": null,
+      "shelf": null,
+      "title": null,
+      "authors": null,
+      "imageLinks": {"thumbnail":null},
+      "industryIdentifiers": []
+    }})
+  }
+
+  /*
+  * @clearSearch
+  * Clears the search results from the search page.
   */
   clearSearch = () => {
-    this.setState({results: []})
+    this.setState({results: [], query: ""})
   }
 
   /*
   * @searchBooks
   * Gets the search results from the API using user's query
   * Updates the results bookshelf using the books in State before passing
-  * the results to the State. 
+  * the results to the State.
   */
   searchBooks = (query) => {
+    //set query string to state
+    this.setState({query: query})
+
     if (query.length > 0) {
       BooksAPI.search(query).then((results) => {
         if (!results.error) {
@@ -99,16 +146,29 @@ class BooksApp extends React.Component {
     }
   }
 
+  Book = ({match}) => {
+    if (!this.state.book) {
+      this.getBook(match.params.id)
+    }
+
+    return <h1>{this.state.book.title}</h1>
+  }
+
   render() {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <SearchBooks results={this.state.results} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
+          <SearchBooks results={this.state.results} query={this.state.query} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
         )} />
 
         <Route exact path="/" render={() => (
           <ListBooks books={this.state.books} changeBookself={this.changeBookself} />
         )} />
+
+        <Route exact path="/details/:id" render={({match}) => (
+          <BookDetails book={this.state.book} onShelfChange={this.changeBookself} match={match} getBook={this.getBook} resetBook={this.resetBook} />
+        )} />
+
       </div>
     )
   }
