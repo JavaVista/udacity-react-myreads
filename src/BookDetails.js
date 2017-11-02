@@ -21,7 +21,7 @@ class BookDetails extends Component {
   }
 
   render() {
-    const { book, onShelfChange, match, getBook } = this.props
+    const { book, onShelfChange, match, getBook, history } = this.props
     const shelf = book.shelf ? book.shelf : 'none'
 
     if (book.id !== match.params.id) {
@@ -31,7 +31,7 @@ class BookDetails extends Component {
     return (
       <div className="list-books">
         <div className="list-books-title">
-          <a className="close-details" href="#" onClick={()=> (history.back())}>Close</a>
+          <a className="close-details" href="#" onClick={()=> (history.goBack())}>Close</a>
           <h1>MyReads</h1>
         </div>
         <div key={book.id} className="book-details">

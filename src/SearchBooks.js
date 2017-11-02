@@ -12,14 +12,14 @@ class SearchBooks extends Component {
   }
 
   render() {
-    const { results, query, changeBookself, onSearch } = this.props;
+    const { results, query, changeBookself, onSearch, history } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <a href="#" className="close-search" onClick={() => {
-            this.props.clearSearch();
-            history.back();
+            this.props.clearSearch()
+            history.goBack()
           }}>Close</a>
           <div className="search-books-input-wrapper">
             <input type="text" value={query} onChange={(e) => onSearch(e.target.value.trim()) } placeholder="Search by title or author"/>
