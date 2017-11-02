@@ -157,16 +157,16 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/search" render={() => (
-          <SearchBooks results={this.state.results} query={this.state.query} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
+        <Route exact path="/search" render={({history}) => (
+          <SearchBooks history={history} results={this.state.results} query={this.state.query} onSearch={this.searchBooks} changeBookself={this.changeBookself} clearSearch={this.clearSearch} />
         )} />
 
         <Route exact path="/" render={() => (
           <ListBooks books={this.state.books} changeBookself={this.changeBookself} />
         )} />
 
-        <Route exact path="/details/:id" render={({match}) => (
-          <BookDetails book={this.state.book} onShelfChange={this.changeBookself} match={match} getBook={this.getBook} resetBook={this.resetBook} />
+        <Route exact path="/details/:id" render={({match, history}) => (
+          <BookDetails history={history} book={this.state.book} onShelfChange={this.changeBookself} match={match} getBook={this.getBook} resetBook={this.resetBook} />
         )} />
 
       </div>
