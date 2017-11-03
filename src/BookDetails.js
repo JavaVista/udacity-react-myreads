@@ -31,7 +31,7 @@ class BookDetails extends Component {
     return (
       <div className="list-books">
         <div className="list-books-title">
-          <a className="close-details" href="#" onClick={()=> (history.goBack())}>Close</a>
+          <a className="close-details" onClick={()=> (history.goBack())}>Close</a>
           <h1>MyReads</h1>
         </div>
         <div key={book.id} className="book-details">

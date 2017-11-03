@@ -17,7 +17,7 @@ class SearchBooks extends Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <a href="#" className="close-search" onClick={() => {
+          <a className="close-search" onClick={() => {
             this.props.clearSearch()
             history.goBack()
           }}>Close</a>
